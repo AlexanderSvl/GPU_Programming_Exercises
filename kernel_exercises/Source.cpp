@@ -1,44 +1,71 @@
-#include <iostream>
 #include <SDL.h>
+#include <cuda_runtime.h>
+#include <iostream>
+#include "device_launch_parameters.h"
 
-int main(int argc, char* argv[]) 
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+
+// CUDA kernel to process the surface
+__global__ void processSurfaceKernel(Uint32* pixels, int width, int height, int mouseX, int mouseY)
 {
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) 
+    int x = blockIdx.x * blockDim.x + threadIdx.x;
+    int y = blockIdx.y * blockDim.y + threadIdx.y;
+
+    if (x < width && y < height)
     {
-        std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
+        int index = y * width + x;
+
+        // Draw a circle around the mouse position
+        int dx = x - mouseX;
+        int dy = y - mouseY;
+        if (dx * dx + dy * dy < 100 * 100) // Circle radius 100
+        {
+            pixels[index] = 0xFF00FF00; // Green color (ARGB)
+        }
+    }
+}
+
+// Function to launch the kernel
+void processSurface(Uint32* devPixels, int width, int height, int mouseX, int mouseY)
+{
+    dim3 blockDim(16, 16);
+    dim3 gridDim((width + blockDim.x - 1) / blockDim.x, (height + blockDim.y - 1) / blockDim.y);
+
+    processSurfaceKernel<<<gridDim, blockDim>>>(devPixels, width, height, mouseX, mouseY);
+
+    // Check for kernel errors
+    cudaError_t err = cudaGetLastError();
+    if (err != cudaSuccess)
+    {
+        std::cerr << "CUDA error: " << cudaGetErrorString(err) << std::endl;
+    }
+    cudaDeviceSynchronize();
+}
+
+int main(int argc, char* argv[])
+{
+    // Initialize SDL2
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        std::cerr << "Failed to initialize SDL2: " << SDL_GetError() << std::endl;
         return -1;
     }
 
-    // Get the current display mode (screen width and height)
-    int screenWidth, screenHeight;
-    SDL_DisplayMode DM;
-    if (SDL_GetCurrentDisplayMode(0, &DM) != 0) 
-    {
-        std::cerr << "Failed to get display mode: " << SDL_GetError() << std::endl;
-        SDL_Quit();
-        return -1;
-    }
-
-    screenWidth = DM.w;
-    screenHeight = DM.h;
-
-    // Create the window with screen resolution
-    SDL_Window* window = SDL_CreateWindow("Centered Rectangle",
+    SDL_Window* window = SDL_CreateWindow("CUDA Surface Drawing",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        screenWidth, screenHeight, SDL_WINDOW_SHOWN);
-
-    if (!window) 
+        SCREEN_WIDTH, SCREEN_HEIGHT,
+        SDL_WINDOW_SHOWN);
+    if (!window)
     {
         std::cerr << "Failed to create window: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return -1;
     }
 
-    // Create a renderer
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) 
+    if (!renderer)
     {
         std::cerr << "Failed to create renderer: " << SDL_GetError() << std::endl;
         SDL_DestroyWindow(window);
@@ -46,43 +73,61 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    // Define rectangle dimensions
-    int rectWidth = 200;
-    int rectHeight = 150;
+    SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, SCREEN_WIDTH, SCREEN_HEIGHT);
+    if (!texture)
+    {
+        std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return -1;
+    }
 
-    // Calculate centered position
-    SDL_Rect rect = { (screenWidth - rectWidth) / 2, (screenHeight - rectHeight) / 2, rectWidth, rectHeight };
+    // Allocate memory for pixels
+    Uint32* hostPixels = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT]();
+    Uint32* devPixels;
+    cudaMalloc(&devPixels, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+    cudaMemset(devPixels, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 
-    // Main loop
     bool running = true;
     SDL_Event event;
+    int mouseX = -1, mouseY = -1;
 
-    while (running) 
+    while (running)
     {
-        // Event handling
-        while (SDL_PollEvent(&event)) 
+        // Handle events
+        while (SDL_PollEvent(&event))
         {
-            if (event.type == SDL_QUIT) 
+            if (event.type == SDL_QUIT)
             {
                 running = false;
             }
+            else if (event.type == SDL_MOUSEMOTION || event.type == SDL_MOUSEBUTTONDOWN)
+            {
+                mouseX = event.motion.x;
+                mouseY = event.motion.y;
+            }
         }
 
-        // Clear the screen with a black color
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);  // Black
+        // Process the surface with the CUDA kernel
+        processSurface(devPixels, SCREEN_WIDTH, SCREEN_HEIGHT, mouseX, mouseY);
+
+        // Copy the processed pixels back to the host
+        cudaMemcpy(hostPixels, devPixels, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32), cudaMemcpyDeviceToHost);
+
+        // Update the SDL texture
+        SDL_UpdateTexture(texture, nullptr, hostPixels, SCREEN_WIDTH * sizeof(Uint32));
+
+        // Render the texture to the screen
         SDL_RenderClear(renderer);
-
-        // Set the draw color for the rectangle (e.g., blue)
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // Blue
-
-        // Draw the rectangle
-        SDL_RenderFillRect(renderer, &rect);
-
-        // Present the rendered content
+        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
         SDL_RenderPresent(renderer);
     }
 
     // Cleanup
+    cudaFree(devPixels);
+    delete[] hostPixels;
+    SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
