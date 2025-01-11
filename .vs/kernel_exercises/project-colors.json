@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "bbacb993-4d8d-4499-bf39-0f1ccfdd9af7": {
+      "ProjectGuid": "bbacb993-4d8d-4499-bf39-0f1ccfdd9af7",
+      "DisplayName": "kernel_exercises",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
