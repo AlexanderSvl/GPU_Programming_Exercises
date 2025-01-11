@@ -86,6 +86,7 @@ int main(int argc, char* argv[])
 
     Uint32* hostPixels = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT]();
     Uint32* devPixels;
+
     cudaMalloc(&devPixels, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
     cudaMemset(devPixels, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 
@@ -120,10 +121,8 @@ int main(int argc, char* argv[])
                     cudaMemcpy(hostPixels, devPixels, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32), cudaMemcpyDeviceToHost);
                 }
             }
-            // Handle mouse button down events
             else if (event.type == SDL_MOUSEBUTTONDOWN)
             {
-                // Start processing (drawing) when the mouse button is pressed
                 isMousePressed = true;
 
                 // Start drawing
@@ -133,10 +132,8 @@ int main(int argc, char* argv[])
                 processSurface(devPixels, SCREEN_WIDTH, SCREEN_HEIGHT, mouseX, mouseY);
                 cudaMemcpy(hostPixels, devPixels, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32), cudaMemcpyDeviceToHost);
             }
-            // Handle mouse button up events
             else if (event.type == SDL_MOUSEBUTTONUP)
             {
-                // Stop processing when the mouse button is released
                 isMousePressed = false;
             }
         }
