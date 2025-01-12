@@ -5,7 +5,7 @@
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
-const int BUTTON_WIDTH = 50;
+const int BUTTON_WIDTH = 60;
 const int BUTTON_HEIGHT = 50;
 
 extern "C"
@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); 
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); 
         SDL_RenderClear(renderer);
 
         SDL_Rect buttonRect = { SCREEN_WIDTH - BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HEIGHT };
