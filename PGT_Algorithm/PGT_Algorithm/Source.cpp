@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 
 	bool IsRunning = true;
 	bool IsMousePressed = false;
-	bool leftButton, rightButton = false;
+	bool IsLeftMouseButtonPressed, IsRightMouseButtonPressed = false;
 
 	SDL_Event event;
 	int mouseX = -1, mouseY = -1;
@@ -78,20 +78,20 @@ int main(int argc, char* argv[])
 
                 if (event.button.button == SDL_BUTTON_LEFT)
                 {
-                    leftButton = true;
-                    rightButton = false;
+                    IsLeftMouseButtonPressed = true;
+                    IsRightMouseButtonPressed = false;
                 }
                 else if (event.button.button == SDL_BUTTON_RIGHT)
                 {
-                    rightButton = true;
-                    leftButton = false; 
+                    IsRightMouseButtonPressed = true;
+                    IsLeftMouseButtonPressed = false; 
                 }
             }
             else if (event.type == SDL_MOUSEBUTTONUP)
             {
                 IsMousePressed = false;
-                leftButton = false;  
-                rightButton = false;
+                IsLeftMouseButtonPressed = false;  
+                IsRightMouseButtonPressed = false;
             }
         }
 
@@ -102,14 +102,14 @@ int main(int argc, char* argv[])
 
         if (IsMousePressed)
         {
-            if (leftButton)
+            if (IsLeftMouseButtonPressed)
             {
                 for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
                 {
                     host_mem_pixels[i] = 0xFF0000; // Red for left button
                 }
             }
-            else if (rightButton)
+            else if (IsRightMouseButtonPressed)
             {
                 for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
                 {
