@@ -1,0 +1,6 @@
+﻿  Compiling CUDA source file process_surface.cu...
+  
+  C:\Users\User\Desktop\Coding\C++\kernel_exercises\Heat_Map\kernel_exercises>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\bin\HostX64\x64" -x cu   -IC:\Users\User\Desktop\Coding\C++\kernel_exercises\Heat_Map\packages\sdl2.2.0.5\build\native\../..//build/native/include/ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"  -G   --keep-dir x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DHAS_SDL2 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/Fdx64\Debug\vc143.pdb" -o C:\Users\User\Desktop\Coding\C++\kernel_exercises\Heat_Map\kernel_exercises\x64\Debug\process_surface.cu.obj "C:\Users\User\Desktop\Coding\C++\kernel_exercises\Heat_Map\kernel_exercises\process_surface.cu" 
+  process_surface.cu
+  tmpxft_000021c0_00000000-7_process_surface.cudafe1.cpp
+  kernel_exercises.vcxproj -> C:\Users\User\Desktop\Coding\C++\kernel_exercises\Heat_Map\x64\Debug\kernel_exercises.exe
