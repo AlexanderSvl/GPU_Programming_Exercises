@@ -8,6 +8,7 @@ const int SCREEN_HEIGHT = 1080;
 const int BUTTON_WIDTH = 60;
 const int BUTTON_HEIGHT = 50;
 
+// Connection with the .cu file, containing the kernel.
 extern "C"
 {
 	void launch_kernel(float* terrain, int width, int height);
