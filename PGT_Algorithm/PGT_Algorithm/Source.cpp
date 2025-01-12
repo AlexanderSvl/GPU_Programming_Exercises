@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 	}
 
 	SDL_Texture* texture = SDL_CreateTexture(renderer,
-		SDL_PIXELFORMAT_ABGR8888,
+		SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STREAMING,
 		SCREEN_WIDTH, SCREEN_HEIGHT
 	);
@@ -56,14 +56,14 @@ int main(int argc, char* argv[])
 
 	bool IsRunning = true;
 	bool IsMousePressed = false;
-	bool IsLeftMouseButtonPressed, IsRightMouseButtonPressed = false;
+    bool IsLeftMouseButtonPressed = false;
+    bool IsRightMouseButtonPressed = false;
 
 	SDL_Event event;
 	int mouseX = -1, mouseY = -1;
 
     while (IsRunning)
     {
-        // Poll events
         while (SDL_PollEvent(&event))
         {
             if (event.type == SDL_QUIT)
@@ -73,6 +73,7 @@ int main(int argc, char* argv[])
             else if (event.type == SDL_MOUSEBUTTONDOWN)
             {
                 IsMousePressed = true;
+
                 mouseX = event.button.x; 
                 mouseY = event.button.y; 
 
@@ -95,26 +96,28 @@ int main(int argc, char* argv[])
             }
         }
 
-        for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
-        {
-            host_mem_pixels[i] = 0x0000FF; // Blue
-        }
-
         if (IsMousePressed)
         {
             if (IsLeftMouseButtonPressed)
             {
                 for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
                 {
-                    host_mem_pixels[i] = 0xFF0000; // Red for left button
+                    host_mem_pixels[i] = 0xFF0000FF;
                 }
             }
             else if (IsRightMouseButtonPressed)
             {
                 for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
                 {
-                    host_mem_pixels[i] = 0x00FF00; // Green for right button
+                    host_mem_pixels[i] = 0x00FF00FF;
                 }
+            }
+        }
+        else
+        {
+            for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
+            {
+                host_mem_pixels[i] = 0x0000FFFF;
             }
         }
 
