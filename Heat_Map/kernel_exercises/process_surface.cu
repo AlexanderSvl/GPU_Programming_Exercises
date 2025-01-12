@@ -51,7 +51,7 @@ __global__ void processSurfaceKernel(float* heatmap, float* newHeatmap, int widt
 
         if (dx * dx + dy * dy <= radius * radius) // Check if within circular area
         {
-            newHeatmap[index] += 10.0f; // Example heat addition value
+            newHeatmap[index] += 10.0f;
         }
     }
 }
