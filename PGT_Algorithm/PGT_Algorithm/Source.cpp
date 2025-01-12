@@ -1,137 +1,108 @@
 #include <iostream>
 #include <SDL.h>
+#include <cuda_runtime.h>
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
+const int BUTTON_WIDTH = 50;
+const int BUTTON_HEIGHT = 50;
+
+extern "C"
+{
+	void launch_kernel(float* terrain, int width, int height);
+}
+
 int main(int argc, char* argv[])
 {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
-		return -1;
-	}
+    // SDL initialization
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
+        SDL_Log("SDL could not initialize! SDL_Error: %s", SDL_GetError());
+        return 1;
+    }
 
-	SDL_Window* window = SDL_CreateWindow("Terrain generation",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		SCREEN_WIDTH,
-		SCREEN_HEIGHT,
-		SDL_WINDOW_SHOWN
-	);
+    // Window initialization
+    SDL_Window* window = SDL_CreateWindow("Button Example",
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
-	if (!window)
-	{
-		std::cerr << "Failed to create window: " << SDL_GetError() << std::endl;
-		SDL_Quit();
-		return -1;
-	}
+    if (!window)
+    {
+        SDL_Log("Window could not be created! SDL_Error: %s", SDL_GetError());
+        SDL_Quit();
+        return 1;
+    }
 
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    // Renderer initialization
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer)
+    {
+        SDL_Log("Renderer could not be created! SDL_Error: %s", SDL_GetError());
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
 
-	if (!renderer)
-	{
-		std::cerr << "Failed to create renderer: " << SDL_GetError() << std::endl;
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		return -1;
-	}
+    bool IsRunning = true;
+    SDL_Event event;
 
-	SDL_Texture* texture = SDL_CreateTexture(renderer,
-		SDL_PIXELFORMAT_RGBA8888,
-		SDL_TEXTUREACCESS_STREAMING,
-		SCREEN_WIDTH, SCREEN_HEIGHT
-	);
-
-	if (!texture)
-	{
-		std::cerr << "Failed to create texture: " << SDL_GetError() << std::endl;
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		return -1;
-	}
-
-	Uint32* host_mem_pixels = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT]();
-	Uint32* device_mem_pixels;
-
-	bool IsRunning = true;
-	bool IsMousePressed = false;
-    bool IsLeftMouseButtonPressed = false;
-    bool IsRightMouseButtonPressed = false;
-
-	SDL_Event event;
-	int mouseX = -1, mouseY = -1;
-
+    // Main running cycle
     while (IsRunning)
     {
-        while (SDL_PollEvent(&event))
+        while (SDL_PollEvent(&event) != 0)
         {
             if (event.type == SDL_QUIT)
             {
                 IsRunning = false;
             }
-            else if (event.type == SDL_MOUSEBUTTONDOWN)
-            {
-                IsMousePressed = true;
 
-                mouseX = event.button.x; 
-                mouseY = event.button.y; 
+            if (event.type == SDL_MOUSEBUTTONDOWN)
+            {
+                int buttonX = SCREEN_WIDTH - BUTTON_WIDTH;
+                int buttonY = 0;
 
-                if (event.button.button == SDL_BUTTON_LEFT)
+                // Check if click is in close button boudaries
+                if (event.button.x >= buttonX &&
+                    event.button.x <= buttonX + BUTTON_WIDTH &&
+                    event.button.y >= buttonY &&
+                    event.button.y <= buttonY + BUTTON_HEIGHT)
                 {
-                    IsLeftMouseButtonPressed = true;
-                    IsRightMouseButtonPressed = false;
-                }
-                else if (event.button.button == SDL_BUTTON_RIGHT)
-                {
-                    IsRightMouseButtonPressed = true;
-                    IsLeftMouseButtonPressed = false; 
-                }
-            }
-            else if (event.type == SDL_MOUSEBUTTONUP)
-            {
-                IsMousePressed = false;
-                IsLeftMouseButtonPressed = false;  
-                IsRightMouseButtonPressed = false;
-            }
-        }
-
-        if (IsMousePressed)
-        {
-            if (IsLeftMouseButtonPressed)
-            {
-                for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
-                {
-                    host_mem_pixels[i] = 0xFF0000FF;
-                }
-            }
-            else if (IsRightMouseButtonPressed)
-            {
-                for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
-                {
-                    host_mem_pixels[i] = 0x00FF00FF;
+                    IsRunning = false;
                 }
             }
         }
-        else
-        {
-            for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
-            {
-                host_mem_pixels[i] = 0x0000FFFF;
-            }
-        }
 
-        // Update the texture and render
-        SDL_UpdateTexture(texture, nullptr, host_mem_pixels, SCREEN_WIDTH * sizeof(Uint32));
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); 
         SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+
+        SDL_Rect buttonRect = { SCREEN_WIDTH - BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_HEIGHT };
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); 
+        SDL_RenderFillRect(renderer, &buttonRect);
+
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+        int buttonX = SCREEN_WIDTH - BUTTON_WIDTH;
+        int buttonY = 0;
+        int buttonRight = buttonX + BUTTON_WIDTH;
+        int buttonBottom = buttonY + BUTTON_HEIGHT;
+
+        int padding = 15; 
+
+        int innerX = buttonX + padding;
+        int innerY = buttonY + padding;
+        int innerRight = buttonRight - padding;
+        int innerBottom = buttonBottom - padding;
+
+        SDL_RenderDrawLine(renderer, innerX, innerY, innerRight, innerBottom); // Top-left to bottom-right
+        SDL_RenderDrawLine(renderer, innerRight, innerY, innerX, innerBottom); // Top-right to bottom-left
+
         SDL_RenderPresent(renderer);
     }
 
-	SDL_DestroyTexture(texture);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
 
-	return 0;
+    return 0;
 }

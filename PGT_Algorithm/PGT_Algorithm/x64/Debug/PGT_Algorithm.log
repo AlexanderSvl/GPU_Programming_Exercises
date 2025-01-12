@@ -1,3 +1,2 @@
 ﻿  Source.cpp
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(55,10): warning C4101: 'device_mem_pixels': unreferenced local variable
   PGT_Algorithm.vcxproj -> C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\x64\Debug\PGT_Algorithm.exe
