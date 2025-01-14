@@ -26,7 +26,7 @@
 
 __constant__ float terrain_step = 1.0; // Step by which we are going to modify the terrain.
 
-float4 float_to_color(float x)
+__device__ float4 float_to_color(float x)
 {
     // Red, green, blue, opacity
     float4 color;
@@ -59,7 +59,7 @@ float4 float_to_color(float x)
     {
         color = make_float4(196.0f, 164.0f, 132.0f, 0.8f);
     }
-    else if (x >= 25 && x < 30) // Dark brown
+    else if (x >= 25 && x <= 30) // Dark brown
     {
         color = make_float4(105.0f, 66.0f, 28.0f, 0.8f);
     }
@@ -71,22 +71,82 @@ float4 float_to_color(float x)
     return color;
 }
 
-__global__ void generate_terrain(float* terrain, int width, int height)
+__global__ void generate_terrain(const int* height_map, float4* color_buffer, int width, int height, int render_width, int render_height)
 {
     unsigned int x = blockIdx.x * blockDim.x + threadIdx.x;
     unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;
 
-    // TODO: Implement the PTG Algorithm
+    if (x >= render_width || y >= render_height) return;
+
+    unsigned int index = y * render_width + x;
+
+    // Scale the input height map to the lower resolution
+    unsigned int src_x = x * (width / render_width);
+    unsigned int src_y = y * (height / render_height);
+    unsigned int src_index = src_y * width + src_x;
+
+    // Get height value from the scaled-down height map
+    float height_value = static_cast<float>(height_map[src_index]);
+
+    // Convert height to color
+    color_buffer[index] = float_to_color(height_value);
 }
+
+
+// Device pointers
+int* device_height_map = nullptr;
+float4* device_color_buffer = nullptr;
 
 extern "C"
 {
-    void launch_kernel(float* terrain, int width, int height)
+    // Initialize device memory for height map and color buffer
+    void init_device_height_map(int width, int height)
+    {
+        cudaMalloc(&device_height_map, width * height * sizeof(int));
+        cudaMalloc(&device_color_buffer, width * height * sizeof(float4));
+    }
+
+    // Free device memory
+    void free_device_height_map()
+    {
+        if (device_height_map) cudaFree(device_height_map);
+        if (device_color_buffer) cudaFree(device_color_buffer);
+    }
+
+    // Copy host height map to device
+    void copy_height_map_to_device(const int* host_height_map, int width, int height)
+    {
+        cudaMemcpy(device_height_map, host_height_map, width * height * sizeof(int), cudaMemcpyHostToDevice);
+    }
+
+    // Launch the terrain generation kernel
+    void launch_kernel(int width, int height, int render_width, int render_height)
     {
         dim3 blockDim(16, 16);
-        dim3 gridDim((width + blockDim.x - 1) / blockDim.x, (height + blockDim.y - 1) / blockDim.y);
+        dim3 gridDim((render_width + blockDim.x - 1) / blockDim.x, (render_height + blockDim.y - 1) / blockDim.y);
 
-        generate_terrain <<<gridDim, blockDim >>> (terrain, width, height);
+        generate_terrain << <gridDim, blockDim >> > (device_height_map, device_color_buffer, width, height, render_width, render_height);
         cudaDeviceSynchronize();
+    }
+
+    // Copy the color buffer back to the host
+    void copy_color_buffer_to_host(Uint32* host_buffer, int width, int height)
+    {
+        float4* host_color_buffer = new float4[width * height];
+        cudaMemcpy(host_color_buffer, device_color_buffer, width * height * sizeof(float4), cudaMemcpyDeviceToHost);
+
+        for (int i = 0; i < width * height; ++i)
+        {
+            float4 color = host_color_buffer[i];
+
+            // Convert float4 RGBA to Uint32 ARGB
+            Uint32 a = static_cast<Uint32>(color.w * 255.0f) << 24;
+            Uint32 r = static_cast<Uint32>(color.x) << 16;
+            Uint32 g = static_cast<Uint32>(color.y) << 8;
+            Uint32 b = static_cast<Uint32>(color.z);
+            host_buffer[i] = a | r | g | b;
+        }
+
+        delete[] host_color_buffer;
     }
 }
