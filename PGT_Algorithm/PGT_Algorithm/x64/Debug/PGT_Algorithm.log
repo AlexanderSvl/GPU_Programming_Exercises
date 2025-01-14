@@ -1,17 +1,10 @@
 ﻿  Compiling CUDA source file kernel.cu...
   
   C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\bin\HostX64\x64" -x cu   -IC:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\../..//build/native/include/ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"  -G   --keep-dir x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DHAS_SDL2 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/Fdx64\Debug\vc143.pdb" -o C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\x64\Debug\kernel.cu.obj "C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\kernel.cu" 
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\kernel.cu(29): warning #177-D: variable "x" was declared but never referenced
-        unsigned int x = blockIdx.x * blockDim.x + threadIdx.x;
-                     ^
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\kernel.cu(30): error : expected a declaration
+    {
+    ^
   
-  Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
-  
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\kernel.cu(30): warning #177-D: variable "y" was declared but never referenced
-        unsigned int y = blockIdx.y * blockDim.y + threadIdx.y;
-                     ^
-  
+  1 error detected in the compilation of "C:/Users/User/Desktop/Coding/C++/kernel_exercises/PGT_Algorithm/PGT_Algorithm/kernel.cu".
   kernel.cu
-  tmpxft_000050f0_00000000-7_kernel.cudafe1.cpp
-  Source.cpp
-  PGT_Algorithm.vcxproj -> C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\x64\Debug\PGT_Algorithm.exe
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\CUDA 12.6.targets(799,9): error MSB3721: The command ""C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\bin\HostX64\x64" -x cu   -IC:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\../..//build/native/include/ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"  -G   --keep-dir x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DHAS_SDL2 -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/Fdx64\Debug\vc143.pdb" -o C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\x64\Debug\kernel.cu.obj "C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\kernel.cu"" exited with code 2.
