@@ -12,7 +12,7 @@ const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
 const int RENDER_WIDTH = 240;
-const int RENDER_HEIGHT = 120;
+const int RENDER_HEIGHT = 135;
 
 const int BUTTON_WIDTH = 60;
 const int BUTTON_HEIGHT = 50;
@@ -34,7 +34,6 @@ float noise(float x, float y)
     return (1.0f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f);
 }
 
-// Smooth noise function
 float smoothNoise(float x, float y)
 {
     float corners = (noise(x - 1, y - 1) + noise(x + 1, y - 1) + noise(x - 1, y + 1) + noise(x + 1, y + 1)) / 16;
@@ -43,7 +42,6 @@ float smoothNoise(float x, float y)
     return corners + sides + center;
 }
 
-// Interpolated noise function
 float interpolatedNoise(float x, float y)
 {
     int integerX = static_cast<int>(x);
@@ -63,7 +61,6 @@ float interpolatedNoise(float x, float y)
     return (1 - fractionalY) * i1 + fractionalY * i2;
 }
 
-// Perlin noise function
 float perlinNoise(float x, float y, int octaves, float persistence)
 {
     float total = 0;
@@ -82,7 +79,38 @@ float perlinNoise(float x, float y, int octaves, float persistence)
     return total / maxValue;
 }
 
-// Height map generation
+// Helper function to enforce gradual transitions
+void enforce_gradual_transitions(int** height_map, unsigned width, unsigned height)
+{
+    for (unsigned y = 0; y < height; ++y)
+    {
+        for (unsigned x = 0; x < width; ++x)
+        {
+            int current = height_map[y][x];
+
+            // Check all neighbors and enforce the rule
+            for (int dy = -1; dy <= 1; ++dy)
+            {
+                for (int dx = -1; dx <= 1; ++dx)
+                {
+                    int ny = y + dy;
+                    int nx = x + dx;
+
+                    if (nx >= 0 && nx < (int)width && ny >= 0 && ny < (int)height && !(dx == 0 && dy == 0))
+                    {
+                        int neighbor = height_map[ny][nx];
+                        if (abs(neighbor - current) > 1)
+                        {
+                            height_map[ny][nx] = current + ((neighbor > current) ? 1 : -1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Updated height map generation
 int** create_height_array(unsigned width, unsigned height)
 {
     // Allocate 2D array
@@ -92,10 +120,9 @@ int** create_height_array(unsigned width, unsigned height)
         height_map[i] = new int[width];
     }
 
-    // Generate terrain using Perlin noise
-    float scale = 0.025f; // Adjust for different terrain features
+    float scale = 0.03f; // Adjust for different terrain features
     int octaves = 6;    // Number of noise layers
-    float persistence = 0.001f; // Persistence controls smoothness
+    float persistence = 0.03f; // Persistence controls smoothness
 
     for (unsigned y = 0; y < height; ++y)
     {
@@ -104,27 +131,27 @@ int** create_height_array(unsigned width, unsigned height)
             float noise_value = perlinNoise(x * scale, y * scale, octaves, persistence);
 
             // Map noise to terrain types
-            if (noise_value < -0.5f)
+            if (noise_value < -0.25f)
             {
                 height_map[y][x] = -2; // Deep sea
             }
-            else if (noise_value < -0.2f)
+            else if (noise_value <= -0.1f)
             {
                 height_map[y][x] = -1; // Shallow sea
             }
-            else if (noise_value < 0.0f)
+            else if (noise_value <= 0.0f)
             {
                 height_map[y][x] = 0; // Sand
             }
-            else if (noise_value < 0.3f)
+            else if (noise_value < 0.1f)
             {
                 height_map[y][x] = 1; // Low land
             }
-            else if (noise_value < 0.6f)
+            else if (noise_value < 0.2f)
             {
                 height_map[y][x] = 2; // High land
             }
-            else if (noise_value < 0.8f)
+            else if (noise_value < 0.35f)
             {
                 height_map[y][x] = 3; // Low mountains
             }
@@ -134,6 +161,9 @@ int** create_height_array(unsigned width, unsigned height)
             }
         }
     }
+
+    // Enforce gradual transitions
+    enforce_gradual_transitions(height_map, width, height);
 
     return height_map;
 }

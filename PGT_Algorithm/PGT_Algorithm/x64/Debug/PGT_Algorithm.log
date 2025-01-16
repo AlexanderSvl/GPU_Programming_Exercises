@@ -1,10 +1,10 @@
 ﻿  Source.cpp
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(55,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(53,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(53,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(54,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(54,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(55,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(55,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(56,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(56,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(56,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(57,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(57,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(58,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(58,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   PGT_Algorithm.vcxproj -> C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\x64\Debug\PGT_Algorithm.exe
