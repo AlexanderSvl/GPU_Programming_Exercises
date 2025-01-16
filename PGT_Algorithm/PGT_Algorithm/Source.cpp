@@ -27,218 +27,115 @@ extern "C"
     void copy_color_buffer_to_host(Uint32* host_buffer, int width, int height);
 }
 
-int fade(int t)
+float noise(float x, float y)
 {
-    return (int)(t * t * t * (t * (t * 6 - 15) + 10));
+    int n = static_cast<int>(x + y * 57);
+    n = (n << 13) ^ n;
+    return (1.0f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f);
 }
 
-int lerp(int a, int b, int t)
+// Smooth noise function
+float smoothNoise(float x, float y)
 {
-    return a + t * (b - a);
+    float corners = (noise(x - 1, y - 1) + noise(x + 1, y - 1) + noise(x - 1, y + 1) + noise(x + 1, y + 1)) / 16;
+    float sides = (noise(x - 1, y) + noise(x + 1, y) + noise(x, y - 1) + noise(x, y + 1)) / 8;
+    float center = noise(x, y) / 4;
+    return corners + sides + center;
 }
 
-int grad(int hash, int x, int y)
+// Interpolated noise function
+float interpolatedNoise(float x, float y)
 {
-    int h = hash & 15;
-    int u = h < 8 ? x : y;
-    int v = h < 4 ? y : (h == 12 || h == 14 ? x : 0);
-    return (h & 1 ? -u : u) + (h & 2 ? -v : v);
+    int integerX = static_cast<int>(x);
+    float fractionalX = x - integerX;
+
+    int integerY = static_cast<int>(y);
+    float fractionalY = y - integerY;
+
+    float v1 = smoothNoise(integerX, integerY);
+    float v2 = smoothNoise(integerX + 1, integerY);
+    float v3 = smoothNoise(integerX, integerY + 1);
+    float v4 = smoothNoise(integerX + 1, integerY + 1);
+
+    float i1 = (1 - fractionalX) * v1 + fractionalX * v2;
+    float i2 = (1 - fractionalX) * v3 + fractionalX * v4;
+
+    return (1 - fractionalY) * i1 + fractionalY * i2;
 }
 
-int noise(int x, int y)
+// Perlin noise function
+float perlinNoise(float x, float y, int octaves, float persistence)
 {
-    int p = x + y * 57; // A prime number to shuffle the coordinates
-    int n = (p << 13) ^ p;
-    return (1.0 - (n * (n * n * 15731 + 789221) + 1376312589 & 0x7fffffff) / 1073741824.0f) * 2 - 1;
-}
+    float total = 0;
+    float frequency = 1;
+    float amplitude = 1;
+    float maxValue = 0;
 
-// Perlin noise function (2D)
-double perlin_noise(double x, double y)
-{
-    int X = (int)std::floor(x) & 255;
-    int Y = (int)std::floor(y) & 255;
-    double dx = x - std::floor(x);
-    double dy = y - std::floor(y);
-    double u = fade(dx);
-    double v = fade(dy);
-
-    int a = noise(X, Y);
-    int b = noise(X + 1, Y);
-    int c = noise(X, Y + 1);
-    int d = noise(X + 1, Y + 1);
-
-    double result = lerp(lerp(a, b, u), lerp(c, d, u), v);
-    return result;
-}
-
-// Map the height value to the terrain type with more gradual transitions
-int map_to_terrain(double value)
-{
-    if (value <= 0.0) return -2;  // Deep sea (dark blue)
-    if (value <= 0.5) return -1;  // Shallow sea (light blue)
-    if (value <= 1.5) return 0;   // Sand (yellow)
-    if (value <= 2.0) return 1;   // Low land (light green)
-    if (value <= 3.0) return 2;   // High land (dark green)
-    if (value <= 3.8) return 3;   // Low mountain (grey)
-    return 4;  // High mountain (white)
-}
-
-// Ensure gradual transitions between neighboring values (+-1)
-double enforce_gradual_transition(double current, double next)
-{
-    if (next > current + 1) return current + 1; // Don't let the change be more than +1
-    if (next < current - 1) return current - 1; // Don't let the change be more than -1
-    return next;  // Allow gradual change
-}
-
-// Enforce gradual transition in all directions (left, right, up, down)
-void enforce_gradual_transitions(int** arr, unsigned width, unsigned height)
-{
-    bool changesMade = true;
-    while (changesMade)
+    for (int i = 0; i < octaves; ++i)
     {
-        changesMade = false;
-        // Horizontal and vertical checks
-        for (unsigned h = 0; h < height; h++)
-        {
-            for (unsigned w = 0; w < width; w++)
-            {
-                // Check left (horizontal)
-                if (w > 0)
-                {
-                    int adjusted = enforce_gradual_transition(arr[h][w - 1], arr[h][w]);
-                    if (arr[h][w] != adjusted)
-                    {
-                        arr[h][w] = adjusted;
-                        changesMade = true;
-                    }
-                }
-                // Check up (vertical)
-                if (h > 0)
-                {
-                    int adjusted = enforce_gradual_transition(arr[h - 1][w], arr[h][w]);
-                    if (arr[h][w] != adjusted)
-                    {
-                        arr[h][w] = adjusted;
-                        changesMade = true;
-                    }
-                }
-                // Check right (horizontal)
-                if (w < width - 1)
-                {
-                    int adjusted = enforce_gradual_transition(arr[h][w + 1], arr[h][w]);
-                    if (arr[h][w] != adjusted)
-                    {
-                        arr[h][w] = adjusted;
-                        changesMade = true;
-                    }
-                }
-                // Check down (vertical)
-                if (h < height - 1)
-                {
-                    int adjusted = enforce_gradual_transition(arr[h + 1][w], arr[h][w]);
-                    if (arr[h][w] != adjusted)
-                    {
-                        arr[h][w] = adjusted;
-                        changesMade = true;
-                    }
-                }
-            }
-        }
+        total += interpolatedNoise(x * frequency, y * frequency) * amplitude;
+        maxValue += amplitude;
+        amplitude *= persistence;
+        frequency *= 2;
     }
+
+    return total / maxValue;
 }
 
-// Generate the heightmap with Perlin noise, octaves, and gradual transitions
+// Height map generation
 int** create_height_array(unsigned width, unsigned height)
 {
-    // Seed random number generator
-    std::srand(std::time(0));
-
-    // Initialize 2D array for terrain heights
-    int** arr = new int* [height];
-    for (unsigned i = 0; i < height; i++)
-        arr[i] = new int[width];
-
-    // Parameters for Perlin noise with octaves
-    double frequency = 0.04;  // Lower frequency for smoother, larger features
-    double amplitude = 5.0;   // Amplitude for larger variations with smooth transitions
-    int octaves = 6;          // More octaves to add finer detail while keeping smoothness
-
-    // Step 1: Initialize with base random values (random offsets)
-    for (unsigned h = 0; h < height; h++)
+    // Allocate 2D array
+    int** height_map = new int* [height];
+    for (unsigned i = 0; i < height; ++i)
     {
-        for (unsigned w = 0; w < width; w++)
-        {
-            // Initialize terrain with random base heights between -2 and 4
-            arr[h][w] = rand() % 7 - 2;
-        }
+        height_map[i] = new int[width];
     }
 
-    // Step 2: Apply multiple octaves of Perlin noise to adjust the terrain
-    for (unsigned h = 0; h < height; h++)
-    {
-        for (unsigned w = 0; w < width; w++)
-        {
-            double final_value = 0.0;
-            double current_frequency = frequency;
-            double current_amplitude = amplitude;
+    // Generate terrain using Perlin noise
+    float scale = 0.025f; // Adjust for different terrain features
+    int octaves = 6;    // Number of noise layers
+    float persistence = 0.001f; // Persistence controls smoothness
 
-            // Sum up multiple octaves
-            for (int octave = 0; octave < octaves; octave++)
+    for (unsigned y = 0; y < height; ++y)
+    {
+        for (unsigned x = 0; x < width; ++x)
+        {
+            float noise_value = perlinNoise(x * scale, y * scale, octaves, persistence);
+
+            // Map noise to terrain types
+            if (noise_value < -0.5f)
             {
-                double perlin_value = perlin_noise(w * current_frequency, h * current_frequency);
-
-                // Normalize the Perlin value to [0, 1]
-                perlin_value = (perlin_value + 1) / 2.0;
-
-                // Scale the Perlin value according to the current amplitude
-                perlin_value *= current_amplitude;
-
-                // Add the Perlin value for this octave
-                final_value += perlin_value;
-
-                // Increase frequency and decrease amplitude for next octave
-                current_frequency *= 2.0;  // Double the frequency for finer detail
-                current_amplitude *= 0.5; // Halve the amplitude for each octave
+                height_map[y][x] = -2; // Deep sea
             }
-
-            // Apply the final value to the terrain array
-            arr[h][w] += final_value;
-
-            // Map the height value to a terrain type (from -2 to 4)
-            arr[h][w] = map_to_terrain(arr[h][w]);
+            else if (noise_value < -0.2f)
+            {
+                height_map[y][x] = -1; // Shallow sea
+            }
+            else if (noise_value < 0.0f)
+            {
+                height_map[y][x] = 0; // Sand
+            }
+            else if (noise_value < 0.3f)
+            {
+                height_map[y][x] = 1; // Low land
+            }
+            else if (noise_value < 0.6f)
+            {
+                height_map[y][x] = 2; // High land
+            }
+            else if (noise_value < 0.8f)
+            {
+                height_map[y][x] = 3; // Low mountains
+            }
+            else
+            {
+                height_map[y][x] = 4; // High mountains
+            }
         }
     }
 
-    // Step 3: Enforce gradual transition in all directions (up, down, left, right, diagonal)
-    enforce_gradual_transitions(arr, width, height);
-
-    // Step 4: Redistribute the terrain values to fit within the desired range [-2, 4]
-    double min_val = 9999.0;
-    double max_val = -9999.0;
-
-    // Find the min and max values in the heightmap
-    for (unsigned h = 0; h < height; h++)
-    {
-        for (unsigned w = 0; w < width; w++)
-        {
-            double value = arr[h][w];
-            if (value < min_val) min_val = value;
-            if (value > max_val) max_val = value;
-        }
-    }
-
-    // Normalize the values to fit within [-2, 4]
-    for (unsigned h = 0; h < height; h++)
-    {
-        for (unsigned w = 0; w < width; w++)
-        {
-            double normalized_value = (arr[h][w] - min_val) / (max_val - min_val); // Normalize to [0, 1]
-            arr[h][w] = -2 + (normalized_value * 6); // Redistribute to [-2, 4]
-        }
-    }
-
-    return arr;
+    return height_map;
 }
 
 int* flatten_height_array(int** arr, int width, int height)

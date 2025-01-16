@@ -32,7 +32,7 @@ __device__ float4 float_to_color(float x)
 
     if (x == -2) // Dark blue
     {
-        color = make_float4(0.0f, 6.0f, 115.0f, 0.8f);
+        color = make_float4(0.0f, 56.0f, 168.0f, 0.8f);
     }
     else if (x == -1) // Light blue
     {
@@ -48,7 +48,7 @@ __device__ float4 float_to_color(float x)
     }
     else if (x == 2) // Dark green
     {
-        color = make_float4(6.0f, 104.0f, 0.0f, 0.8f);
+        color = make_float4(25.0f, 205.0f, 15.0f, 0.8f);
     }
     else if (x == 3) // Grey
     {

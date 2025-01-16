@@ -1,15 +1,10 @@
 ﻿  Source.cpp
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(52,97): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(62,21): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(63,21): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(70,37): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(70,52): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(70,56): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(109,34): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(119,34): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(129,34): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(139,34): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(155,25): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(206,26): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(237,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(55,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(55,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(56,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(56,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(57,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(57,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(58,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(58,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   PGT_Algorithm.vcxproj -> C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\x64\Debug\PGT_Algorithm.exe
