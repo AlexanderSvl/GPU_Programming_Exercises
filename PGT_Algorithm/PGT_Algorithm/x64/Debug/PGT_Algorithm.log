@@ -7,4 +7,5 @@ C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\So
 C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(55,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(56,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(56,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  LINK : C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\x64\Debug\PGT_Algorithm.exe not found or not built by the last incremental link; performing full link
   PGT_Algorithm.vcxproj -> C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\x64\Debug\PGT_Algorithm.exe
