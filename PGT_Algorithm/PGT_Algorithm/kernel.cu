@@ -4,11 +4,6 @@
 #include <device_launch_parameters.h>
 #include <curand_kernel.h>
 
-// Steps to integrate the PGT algorithm
-// 
-// -- 1. Determine the range in which the terrain generates (e.g -10 to +20, -10 being underwater, +20 being a mountain)
-// -- 2. Determine the colors in the different ranges of the terrain.
-// 
 //                    COLOR TABLE
 //      ================================
 //      |   -2   |     Dark blue       |     -- Represents deep sea area
@@ -19,11 +14,6 @@
 //      |   3    |     Grey            |     -- Represents low mountain area
 //      |   4    |     White           |     -- Represents high mountain area (peaks)
 //      ================================
-//
-// -- 3. Design an algorithm to integrate the terrain generation
-// -- 4. We need a way to store the previous terrain index, so we can create a gradual terrain generation.
-
-__constant__ float terrain_step = 1.0; // Step by which we are going to modify the terrain.
 
 __device__ float4 float_to_color(float x)
 {
