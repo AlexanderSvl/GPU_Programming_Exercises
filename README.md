@@ -23,8 +23,9 @@ This project generates realistic terrain maps using Perlin noise, CUDA for paral
 - The generated terrain is color-mapped and displayed in real-time using SDL.
 
 ### Example:
-![PGT Algorithm visualization](https://github.com/user-attachments/assets/69356c44-4276-4bf7-9b68-486a555e9dad)
-*PGT Algorithm visualization*
-
+<div style="text-align: center;">
+  <img src="https://github.com/user-attachments/assets/69356c44-4276-4bf7-9b68-486a555e9dad" alt="PGT Algorithm visualization" />
+  <p style="display: inline-block;">PGT Algorithm visualization</p>
+</div>
 
 ---
