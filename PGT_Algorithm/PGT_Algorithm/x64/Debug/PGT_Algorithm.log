@@ -1,10 +1,18 @@
-﻿  Source.cpp
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(58,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(58,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(59,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(59,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(60,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(60,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(61,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(61,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  Compiling CUDA source file kernel.cu...
+  
+  C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\bin\HostX64\x64" -x cu   -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include"  -G   --keep-dir x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/Fdx64\Debug\vc143.pdb" -o C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\x64\Debug\kernel.cu.obj "C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\kernel.cu" 
+  kernel.cu
+  tmpxft_00002b30_00000000-7_kernel.cudafe1.cpp
+  Source.cpp
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\Source.cpp(17,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  terrain.cpp
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(28,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(28,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(29,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(29,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(30,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(30,28): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(31,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\PGT_Algorithm\terrain.cpp(31,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   PGT_Algorithm.vcxproj -> C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\x64\Debug\PGT_Algorithm.exe

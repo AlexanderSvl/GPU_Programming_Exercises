@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include <SDL.h>
+
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 #include <curand_kernel.h>
@@ -128,7 +130,6 @@ extern "C"
         {
             float4 color = host_color_buffer[i];
 
-            // Convert float4 RGBA to Uint32 ARGB
             Uint32 a = static_cast<Uint32>(color.w * 255.0f) << 24;
             Uint32 r = static_cast<Uint32>(color.x) << 16;
             Uint32 g = static_cast<Uint32>(color.y) << 8;
