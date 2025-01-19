@@ -1,3 +1,5 @@
+#define SDL_MAIN_HANDLED
+
 #include <iostream>
 #include <vector>
 #include <random>
@@ -5,8 +7,11 @@
 #include <algorithm>
 #include <cstdint>
 #include <iomanip>
-#include <SDL.h>
+#include <string>
 #include <cuda_runtime.h>
+
+#include <SDL_ttf.h>
+#include <SDL.h>
 
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
@@ -181,6 +186,62 @@ int* flatten_height_array(int** arr, int width, int height)
     return flat_arr;
 }
 
+// Function to render text in a semi-transparent dark grey rectangle
+void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, int width, int height)
+{
+    // Create a surface with the text
+    SDL_Color textColor = { 255, 255, 255 };  // White text color
+    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+    if (!textSurface)
+    {
+        SDL_Log("Unable to create text surface! TTF_Error: %s", TTF_GetError());
+        return;
+    }
+
+    // Create a texture from the surface
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    if (!textTexture)
+    {
+        SDL_Log("Unable to create text texture! SDL_Error: %s", SDL_GetError());
+        SDL_FreeSurface(textSurface);
+        return;
+    }
+
+    // Define padding
+    const int padding = 5;
+
+    // Define the rectangle for the background (semi-transparent dark grey)
+    SDL_Rect bgRect = {
+        width - (textSurface->w + 2 * padding) - 10,  // 5px padding from the right edge, 5px from the bottom
+        height - (textSurface->h + 2 * padding) - 10, // 5px padding from the bottom edge
+        textSurface->w + 2 * padding, // width of the background rect including padding
+        textSurface->h + 2 * padding  // height of the background rect including padding
+    };
+
+    // Set the blend mode for the background rectangle to allow transparency
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 128);  // Dark grey with transparency
+    SDL_RenderFillRect(renderer, &bgRect);
+
+    // Define the rectangle for the text (inside the background)
+    SDL_Rect textRect = {
+        width - textSurface->w - padding - 10,  // Apply padding for X
+        height - textSurface->h - padding - 10, // Apply padding for Y
+        textSurface->w,  // Text width (no padding here)
+        textSurface->h   // Text height (no padding here)
+    };
+
+    // Render the text texture on top of the background
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+
+    // Reset the blend mode to default (so the rest of the rendering isn't affected)
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
+    // Clean up
+    SDL_DestroyTexture(textTexture);
+    SDL_FreeSurface(textSurface);
+}
+
 int main(int argc, char* argv[])
 {
     // SDL initialization
@@ -224,6 +285,28 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    if (TTF_Init() == -1)
+    {
+        SDL_Log("SDL_ttf could not initialize! TTF_Error: %s", TTF_GetError());
+        SDL_DestroyTexture(texture);
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+
+    // Load a font
+    TTF_Font* font = TTF_OpenFont("../fonts/zain.ttf", 24); // Adjust font size and path
+    if (!font)
+    {
+        SDL_Log("Failed to load font! TTF_Error: %s", TTF_GetError());
+        SDL_DestroyTexture(texture);
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return 1;
+    }
+
     // Initialize CUDA resources
     init_device_height_map(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -236,6 +319,7 @@ int main(int argc, char* argv[])
 
     bool IsRunning = true;
     SDL_Event event;
+    int mouseX = -1, mouseY = -1;
 
     while (IsRunning)
     {
@@ -244,6 +328,10 @@ int main(int argc, char* argv[])
             if (event.type == SDL_QUIT)
             {
                 IsRunning = false;
+            }
+            else if (event.type == SDL_MOUSEMOTION)
+            {
+                SDL_GetMouseState(&mouseX, &mouseY);
             }
         }
 
@@ -278,6 +366,14 @@ int main(int argc, char* argv[])
 
                 SDL_RenderFillRect(renderer, &pixelRect);
             }
+        }
+
+        // Render height at mouse position
+        if (mouseX >= 0 && mouseX < SCREEN_WIDTH && mouseY >= 0 && mouseY < SCREEN_HEIGHT)
+        {
+            int height_value = height_map[mouseY][mouseX];
+            std::string height_text = "Height: " + std::to_string(height_value);
+            render_text(renderer, font, height_text, SCREEN_WIDTH, SCREEN_HEIGHT);
         }
 
         SDL_RenderPresent(renderer);

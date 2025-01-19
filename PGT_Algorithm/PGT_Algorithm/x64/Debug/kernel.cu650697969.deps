@@ -1,3 +1,4 @@
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\sdkddkver.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winapifamily.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\winpackagefamily.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\corecrt.h
@@ -37,6 +38,7 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\sys\stat.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\sys\types.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\time.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\ucrt\wchar.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winsdkver.h
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\include\ammintrin.h
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\include\atomic
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.30.30705\include\cctype
@@ -178,46 +180,54 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include\texture_types.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include\vector_functions.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include\vector_functions.hpp
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.6\include\vector_types.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\begin_code.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\close_code.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_assert.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_atomic.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_audio.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_blendmode.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_clipboard.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_config.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_cpuinfo.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_endian.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_error.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_events.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_filesystem.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_gamecontroller.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_gesture.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_haptic.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_hints.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_joystick.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_keyboard.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_keycode.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_loadso.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_log.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_main.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_messagebox.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_mouse.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_mutex.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_pixels.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_platform.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_power.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_quit.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_rect.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_render.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_rwops.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_scancode.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_stdinc.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_surface.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_system.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_thread.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_timer.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_touch.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_version.h
-C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\sdl2.2.0.5\build\native\include\SDL_video.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\begin_code.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\close_code.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_assert.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_atomic.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_audio.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_blendmode.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_clipboard.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_config.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_config_windows.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_cpuinfo.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_endian.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_error.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_events.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_filesystem.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_gamecontroller.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_gesture.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_guid.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_haptic.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_hidapi.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_hints.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_joystick.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_keyboard.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_keycode.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_loadso.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_locale.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_log.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_main.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_messagebox.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_metal.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_misc.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_mouse.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_mutex.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_pixels.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_platform.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_power.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_quit.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_rect.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_render.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_rwops.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_scancode.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_sensor.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_shape.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_stdinc.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_surface.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_system.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_thread.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_timer.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_touch.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_version.h
+C:\Users\User\Desktop\Coding\C++\kernel_exercises\PGT_Algorithm\packages\SDL2-2.24.0\include\SDL_video.h
