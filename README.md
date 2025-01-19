@@ -44,4 +44,8 @@ This project generates realistic terrain maps using Perlin noise, CUDA for paral
 - Mountain ranges are formed using a flood-fill technique, and terrain smoothing ensures natural transitions.
 - The generated terrain is color-mapped and displayed in real-time using SDL.
 
+### Example:
+![pgt_example](https://github.com/user-attachments/assets/69356c44-4276-4bf7-9b68-486a555e9dad)
+
+
 ---
