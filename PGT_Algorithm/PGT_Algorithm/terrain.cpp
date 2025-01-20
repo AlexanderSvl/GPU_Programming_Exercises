@@ -1,10 +1,15 @@
 #include "terrain.h"
 #include <cmath>
 #include <algorithm>
+#include <random>
+#include <ctime>
+#include <iostream>
+
+int global_seed = std::rand() % 40000001;; // static_cast<int>(time(0));  // Initialize seed once
 
 float noise(float x, float y)
 {
-    int n = static_cast<int>(x + y * 57);
+    int n = static_cast<int>(x + y * 57 + global_seed);  // Use the global seed
     n = (n << 13) ^ n;
     return (1.0f - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0f);
 }
