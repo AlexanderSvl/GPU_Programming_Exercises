@@ -36,7 +36,7 @@ extern "C"
 }
 
 // Function to render text in a semi-transparent dark grey rectangle
-void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, int width, int height)
+void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, int width, int height, bool isGlobalSeed = false)
 {
     // Create a surface with the text
     SDL_Color textColor = { 255, 255, 255 };        // White text color
@@ -60,24 +60,38 @@ void render_text(SDL_Renderer* renderer, TTF_Font* font, const std::string& text
     const int padding = 5;
 
     // Define the rectangle for the background (semi-transparent dark grey)
-    SDL_Rect bgRect = {
-        width - (textSurface->w + 2 * padding) - 10,        // 5px padding from the right edge, 5px from the bottom
-        height - (textSurface->h + 2 * padding) - 10,       // 5px padding from the bottom edge
-        textSurface->w + 2 * padding,                       // width of the background rect including padding
-        textSurface->h + 2 * padding                        // height of the background rect including padding
-    };
+    SDL_Rect bgRect;
+
+    if (isGlobalSeed)
+    {
+        bgRect = {
+            10,                                                         // 5px padding from the left edge
+            height - (textSurface->h + 2 * padding) - 10,               // 5px padding from the bottom edge
+            textSurface->w + 2 * padding,                               // width of the background rect including padding
+            textSurface->h + 2 * padding                                // height of the background rect including padding
+        };
+    }
+    else
+    {
+        bgRect = {
+            width - (textSurface->w + 2 * padding) - 10,                // 5px padding from the right edge
+            height - (textSurface->h + 2 * padding) - 10,               // 5px padding from the bottom edge
+            textSurface->w + 2 * padding,                               // width of the background rect including padding
+            textSurface->h + 2 * padding                                // height of the background rect including padding
+        };
+    }
 
     // Set the blend mode for the background rectangle to allow transparency
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 128);         // Dark grey with transparency
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 128);                     // Dark grey with transparency
     SDL_RenderFillRect(renderer, &bgRect);
 
     // Define the rectangle for the text (inside the background)
     SDL_Rect textRect = {
-        width - textSurface->w - padding - 10,              // Apply padding for X
-        height - textSurface->h - padding - 10,             // Apply padding for Y
-        textSurface->w,                                     // Text width (no padding here)
-        textSurface->h                                      // Text height (no padding here)
+        isGlobalSeed ? 10 : width - textSurface->w - padding - 10,      // Apply padding for X, left for global seed
+        height - textSurface->h - padding - 10,                         // Apply padding for Y
+        textSurface->w,                                                 // Text width (no padding here)
+        textSurface->h                                                  // Text height (no padding here)
     };
 
     // Render the text texture on top of the background
@@ -156,6 +170,9 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    // Initialize the world seed
+    seed_rng();
+
     // Initialize CUDA resources
     init_device_height_map(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -165,6 +182,8 @@ int main(int argc, char* argv[])
 
     Uint32* displayPixels = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT]();
     copy_color_buffer_to_host(displayPixels, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+    std::string globalSeedText = "Seed: " + std::to_string(global_seed);
 
     bool IsRunning = true;
     SDL_Event event;
@@ -224,6 +243,8 @@ int main(int argc, char* argv[])
             std::string height_text = "Height: " + std::to_string(height_value);
             render_text(renderer, font, height_text, SCREEN_WIDTH, SCREEN_HEIGHT);
         }
+
+        render_text(renderer, font, globalSeedText, SCREEN_WIDTH, SCREEN_HEIGHT, true);
 
         SDL_RenderPresent(renderer);
     }
